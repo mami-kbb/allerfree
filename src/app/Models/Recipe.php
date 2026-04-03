@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Recipe extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'name',
+        'image',
+        'description',
+        'servings',
+        'tips'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function ingredients()
+    {
+        return $this->belongsToMany(Ingredient::class, 'ingredient_recipe')
+        ->withPivot('quantity')
+        ->withTimestamps();
+    }
+
+    public function allergies()
+    {
+        return $this->belongsToMany(Allergy::class, 'allergy_recipe')
+        ->withTimestamps();
+    }
+
+    public function steps()
+    {
+        return $this->hasMany(Step::class)->orderBy('step_number');
+    }
+}
