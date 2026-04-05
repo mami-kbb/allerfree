@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +14,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back();
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [AuthController::class, 'index']);
+
+
+Route::middleware(['auth', 'verified'])->group (function () {
 });

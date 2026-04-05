@@ -6,12 +6,15 @@
     <title>allerfree</title>
     <link rel="stylesheet" href="{{ asset('css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
-    `@yield('css')
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+    @yield('css')
 </head>
 <body>
     <header class="header">
         <div class="header-inner">
-            <h1 class="header_heading">allerfree</h1>
+            <h1 class="header__heading">allerfree</h1>
             <div class="header__search">
                 @yield('search')
             </div>
