@@ -13,6 +13,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            UsersTableSeeder::class,
+            AllergiesTableSeeder::class,
+            RecipesTableSeeder::class,
+            IngredientsTableSeeder::class,
+            AllergyUserTableSeeder::class,
+            AllergyRecipeTableSeeder::class,
+            IngredientRecipeTableSeeder::class,
+            StepsTableSeeder::class,
+        ]);
     }
 }

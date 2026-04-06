@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RecipeController;
+use App\Models\Recipe;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,13 +19,17 @@ use App\Http\Controllers\AuthController;
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
+
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back();
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-Route::get('/', [AuthController::class, 'index']);
-
+Route::get('/', [RecipeController::class, 'index'])->name('index');
+Route::get('/recipe/{recipe_id}', [RecipeController::class, 'show'])->name('detail');
 
 Route::middleware(['auth', 'verified'])->group (function () {
+    Route::get('/mypage', [AuthController::class, 'index'])->name('mypage');
+    Route::get('/mypage/profile', [AuthController::class, 'edit'])->name('profile');
+    Route::patch('/mypage/profile',[AuthController::class, 'update'])->name('profile_update');
 });

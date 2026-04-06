@@ -10,7 +10,7 @@
             </span>
             <button type="button" class="allergy-button" id="openModal">詳細条件</button>
         </div>
-        
+
         <div class="modal" id="modal">
             <div class="modal-content">
                 <span class="close" id="closeModal">&times;</span>
