@@ -19,31 +19,93 @@ class RecipeController extends Controller
     {
         $tab = $request->get('tab', 'recommend');
         $keyword = $request->get('keyword');
+        $excludeAllergies = $request->input('allergy_recipe', []);
+        $selectedAllergies = [];
+
+        if($keyword) {
+            $keywords = preg_split('/\s+/', $keyword);
+            $message = implode(' ', $keywords) . ' のレシピ一覧';
+        } else {
+            $message = "レシピ一覧";
+        }
+
+        if (!empty($excludeAllergies)) {
+            $selectedAllergies = Allergy::whereIn('id', $excludeAllergies)
+            ->pluck('name')
+            ->toArray();
+        }
 
         if ($tab === 'recommend') {
-            $query = Recipe::query()->orderBy('created_at', 'desc');
+            $recipes = Recipe::query()
+            ->orderBy('created_at', 'desc')
+            ->keywordSearch($keyword)
+            ->excludeAllergies($excludeAllergies)
+            ->paginate(10);
 
-            if (!empty($keyword)) {
-                $query->where('name', 'LIKE', '%' . $keyword . '%');
-            }
-
-            $recipes = $query->get();
         } elseif ($tab === 'mylist') {
             if (! auth()->check()) {
                 $recipes = collect();
             } else {
                 /** @var \App\Models\User $user */$user = auth()->user();
-                $query = $user->likedRecipes()
-                ->orderBy('likes.created_at', 'desc');
-
-                if (!empty($keyword)) {
-                    $query->where('recipes.name', 'LIKE', '%' . $keyword . '%');
-                }
-
-                $recipes = $query->get();
+                $recipes = $user->likedRecipes()
+                ->orderBy('likes.created_at', 'desc')
+                ->keywordSearch($keyword)
+                ->excludeAllergies($excludeAllergies)
+                ->paginate(10);
             }
         }
 
-        return view('index', compact('recipes', 'tab', 'keyword'));
+        return view('index', compact('recipes', 'tab', 'keyword', 'message', 'selectedAllergies'));
+    }
+
+    public function postIndex()
+    {
+        if (! auth()->check()) {
+            return redirect('/login');
+        }
+
+        $allergies = Allergy::all();
+
+        return view('post', compact('allergies'));
+    }
+
+    public function postSore(Request $request)
+    {
+        $path = $request->file('recipe_image') ? $request->file('recipe_image')->store('images', 'public') : null;
+
+        $recipe = Recipe::create([
+            'user_id' => auth()->id(),
+            'name' => $request->name,
+            'image' => $path,
+            'description' => $request->description,
+            'servings' => $request->servings,
+            'tips' => $request->tips,
+        ]);
+
+        $recipe->allergies()->sync($request->allergy_recipe);
+
+        if ($request->has('ingredients')) {
+            foreach ($request->ingredients as $key => $ing_name) {
+                if (empty($ing_name)) continue;
+
+                $ingredient = Ingredient::firstOrCreate(['name' => $ing_name]);
+
+                $recipe->ingredients()->attach($ingredient->id, [
+                    'quantity' => $request->quantities[$key] ?? ''
+                ]);
+            }
+        }
+
+        if ($request->has('step')) {
+            foreach ($request->steps as $index => $content) {
+                if (empty($content)) continue;
+                $recipe->steps()->create([
+                    'step_number' => $index + 1,
+                    'content' => $content
+                ]);
+            }
+        }
+
+        return redirect('/mypage');
     }
 }

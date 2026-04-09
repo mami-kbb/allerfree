@@ -25,11 +25,13 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back();
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-Route::get('/', [RecipeController::class, 'index'])->name('index');
-Route::get('/recipe/{recipe_id}', [RecipeController::class, 'show'])->name('detail');
+Route::get('/', [RecipeController::class, 'index'])->name('recipes.list');
+Route::get('/recipe/{recipe_id}', [RecipeController::class, 'show'])->name('recipe.detail');
 
 Route::middleware(['auth', 'verified'])->group (function () {
     Route::get('/mypage', [AuthController::class, 'index'])->name('mypage');
     Route::get('/mypage/profile', [AuthController::class, 'edit'])->name('profile');
     Route::patch('/mypage/profile',[AuthController::class, 'update'])->name('profile_update');
+    Route::get('/post', [RecipeController::class, 'postIndex'])->name('post.index');
+    Route::post('/post', [RecipeController::class, 'postStore'])->name('post.store');
 });

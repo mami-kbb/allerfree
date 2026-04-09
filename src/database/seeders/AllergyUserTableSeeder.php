@@ -17,11 +17,11 @@ class AllergyUserTableSeeder extends Seeder
         DB::table('allergy_user')->insert([
             [
                 'user_id' => 1,
-                'allergy_id' => 1,
+                'allergy_id' => 2,
             ],
             [
                 'user_id' => 1,
-                'allergy_id' => 2,
+                'allergy_id' => 3,
             ],
         ]);
     }

@@ -45,4 +45,26 @@ class Recipe extends Model
     {
         return $this->hasMany(Step::class)->orderBy('step_number');
     }
+
+    public function scopeKeywordSearch($query, $keyword)
+    {
+        if (!empty($keyword)) {
+            $keywords = preg_split('/\s+/', $keyword);
+
+            foreach ($keywords as $word) {
+                $query->where('name', 'LIKE', "%{$word}%");
+            }
+        }
+        return $query;
+    }
+
+    public function scopeExcludeAllergies($query, $excludeAllergies)
+    {
+        if (!empty($excludeAllergies)) {
+            $query->whereDoesntHave('allergies', function ($q) use ($excludeAllergies) {
+                $q->whereIn('allergies.id', $excludeAllergies);
+            });
+        }
+        return $query;
+    }
 }

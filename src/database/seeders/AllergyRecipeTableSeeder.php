@@ -17,19 +17,15 @@ class AllergyRecipeTableSeeder extends Seeder
         DB::table('allergy_recipe')->insert([
             [
                 'recipe_id' => 1,
-                'allergy_id' => 2,
-            ],
-            [
-                'recipe_id' => 1,
                 'allergy_id' => 3,
             ],
             [
                 'recipe_id' => 1,
-                'allergy_id' => 17,
+                'allergy_id' => 4,
             ],
             [
                 'recipe_id' => 1,
-                'allergy_id' => 20,
+                'allergy_id' => 18,
             ],
             [
                 'recipe_id' => 1,
@@ -37,15 +33,19 @@ class AllergyRecipeTableSeeder extends Seeder
             ],
             [
                 'recipe_id' => 1,
-                'allergy_id' => 23,
+                'allergy_id' => 22,
+            ],
+            [
+                'recipe_id' => 1,
+                'allergy_id' => 24,
             ],
             [
                 'recipe_id' => 2,
-                'allergy_id' => 3,
+                'allergy_id' => 4,
             ],
             [
                 'recipe_id' => 2,
-                'allergy_id' => 21,
+                'allergy_id' => 22,
             ],
         ]);
     }

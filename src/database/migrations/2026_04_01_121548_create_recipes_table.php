@@ -19,7 +19,7 @@ class CreateRecipesTable extends Migration
             $table->string('name');
             $table->string('image')->nullable();
             $table->text('description')->nullable();
-            $table->integer('servings')->nullable();
+            $table->string('servings')->nullable();
             $table->text('tips')->nullable();
             $table->timestamps();
         });

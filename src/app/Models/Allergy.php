@@ -22,4 +22,9 @@ class Allergy extends Model
     {
         return $this->belongsToMany(User::class, 'allergy_user');
     }
+
+    public function scopeSelectable($query)
+    {
+        return $query->where('is_selectable', true);
+    }
 }
