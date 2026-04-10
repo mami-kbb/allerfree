@@ -4,9 +4,7 @@
 <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 @endsection
 
-@section('search')
-@include('layouts.search_bar')
-@endsection
+
 
 @section('nav')
 @include('layouts.header_nav')
@@ -19,7 +17,7 @@
             @if ($profile && $profile->profile_image)
             <img src="{{ asset('storage/'.$profile->profile_image) }}" alt="プロフィール画像" class="user-img">
             @else
-            <div class="user-img dummy"></div>
+            <img src="{{ asset('/images/icon.png') }}" alt="icon" class="user-img">
             @endif
             <p class="user-name">{{ $user->name }}</p>
         </div>

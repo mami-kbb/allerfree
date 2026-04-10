@@ -4,9 +4,7 @@
 <link rel="stylesheet" href="{{ asset('css/profile_edit.css') }}">
 @endsection
 
-@section('search')
-@include('layouts.search_bar')
-@endsection
+
 
 @section('nav')
 @include('layouts.header_nav')
@@ -24,6 +22,8 @@
             <div class="image_output" id="list">
                 @if ($profile && $profile->profile_image)
                 <img src="{{ asset('storage/' . $profile->profile_image) }}" class="reader_image">
+                @else
+                <img class="reader_image" src="{{ asset('/images/icon.png') }}" alt="">
                 @endif
             </div>
             <div class="image-control">
@@ -48,7 +48,7 @@
             </div>
             <div class="form__group">
                 <div class="form__group-item">
-                    <label for="allergy" class="form__groupe-label">アレルギー</label>
+                    <label for="allergy" class="form__group-label">アレルギー</label>
                     <div class="allergy-list">
                         @foreach($allergies as $allergy)
                         <input type="checkbox" id="allergy_{{ $allergy->id }}" value="{{ $allergy->id }}" {{ in_array($allergy->id, old('allergy_recipe', [])) ? 'checked' : '' }} name="allergy_recipe[]"  class="allergy-checkbox">
@@ -60,7 +60,7 @@
             <div class="form__group">
                 <div class="form__group-item">
                     <label for="comment" class="form__group-label">自己PR</label>
-                    <input id="comment" type="text" class="form__group-input" name="comment" value="{{ old('comment', $profile->comment ?? '') }}">
+                    <input id="comment" type="text" class="form__group-comment" name="comment" value="{{ old('comment', $profile->comment ?? '') }}">
                 </div>
             </div>
             <div class="form__btn">
