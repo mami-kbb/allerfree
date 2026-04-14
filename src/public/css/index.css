@@ -3,6 +3,14 @@
     margin: 0 auto;
 }
 
+.index-content__header {
+    margin-left: 60px;
+}
+
+.index-content__header h2 {
+    font-size: 30px;
+}
+
 .tabs {
     width: 100%;
     margin-top: 47px;
@@ -36,10 +44,13 @@
 
 .recipe-card {
     width: 290px;
-    max-height: 320px;
     text-decoration: none;
     display: flex;
     flex-direction: column;
+}
+
+.recipe-name {
+    flex-grow: 1;
 }
 
 .recipe-card:hover {
@@ -66,6 +77,6 @@
     height: 30px;
     font-size: 25px;
     display: flex;
-    align-recipes: center;
-    margin: 0;
+    align-items: center;
+    margin: 0 4px 4px;
 }

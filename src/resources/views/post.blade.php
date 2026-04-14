@@ -22,7 +22,7 @@
             </div>
             <input type="file" id="recipe_image" class="image" name="recipe_image" hidden>
             <div class="form__error">
-                @error('recipe_image')
+                @error('image')
                 {{ $message }}
                 @enderror
             </div>
@@ -30,7 +30,7 @@
         <div class="recipe-description">
             <h3>レシピ名と説明</h3>
             <div class="form__group">
-                <label for="name" class="form__group-label">レシピ名</label>
+                <label for="name" class="form__group-label"><span></span>レシピ名</label>
                 <input id="name" type="text" class="form-name__input" name="name" value="{{ old('name') }}">
                 <div class="form__error">
                     @error('name')
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="allergy__group">
-                <label class="allergy__group-label">アレルギー</label>
+                <label class="form__group-label"><span></span>アレルギー</label>
                 <div class="allergy-list">
                     @foreach($allergies as $allergy)
                     <input type="checkbox" id="allergy_{{ $allergy->id }}" value="{{ $allergy->id }}" {{ in_array($allergy->id, old('allergy_recipe', [])) ? 'checked' : '' }} name="allergy_recipe[]" class="allergy-checkbox">
@@ -55,23 +55,18 @@
                 </div>
             </div>
             <div class="form__group">
-                <label class="form__group-label">レシピの説明</label>
+                <label class="form__group-label"><span></span>レシピの説明</label>
                 <textarea class="description" cols="30" rows="5" name="description" id="description">{{ old('description') }}</textarea>
-                <div class="form__error">
-                    @error('description')
-                    {{ $message }}
-                    @enderror
-                </div>
             </div>
         </div>
         <div class="recipe-detail">
             <h3>材料と作り方</h3>
             <div class="form__group">
-                <label for="servings" class="form__group-label">出来上がり量</label>
+                <label for="servings" class="form__group-label"><span></span>出来上がり量</label>
                 <input id="servings" type="text" class="form-servings__input" name="servings" placeholder="例：2人分、15cm型1台分" value="{{ old('servings') }}">
             </div>
             <div class="form__group">
-                <label class="form__group-label">材料</label>
+                <label class="form__group-label"><span></span>材料</label>
                 <div id="ingredient-list">
                     @for ($i = 0; $i < max(2, count(old('ingredients', []))); $i++)
                     <div class="ingredient-item" style="margin-bottom:10px;">
@@ -83,16 +78,24 @@
                 <button type="button" id="add-ingredient" class="ingredient-add">
                     <span class="ingredientAddIcon">+ 材料を追加</span>
                 </button>
+                <div class="form__error">
+                    @error('ingredients.0')
+                    {{ $message }}
+                    @enderror
+                    @error('quantities.0')
+                    {{ $message }}
+                    @enderror
+                </div>
             </div>
 
             <hr>
 
             <div class="form__group">
-                <label class="form__group-label">作り方</label>
+                <label class="form__group-label"><span></span>作り方</label>
                 <div id="step-list">
-                    @for ($i = 0; $i < max(2, count(old('step', []))); $i++)
+                    @for ($i = 0; $i < max(2, count(old('steps', []))); $i++)
                     <div class="step-item" style="margin-bottom: 10px;">
-                        <span class="step-number">{{ $i + 1 }}</span>
+                        <span class="step-number">{{ $i + 1 }}：</span>
                         <input type="text" class="form-step__input" name="steps[]" placeholder="作り方" value="{{ old('steps.' .$i) }}">
                     </div>
                     @endfor
@@ -100,15 +103,15 @@
                 <button type="button" id="add-step" class="ingredient-add">
                     <span class="ingredientAddIcon">+ 工程を追加</span>
                 </button>
-            </div>
-            <div class="form__group">
-                <label for="tips" class="form__group-label">ポイント・コツ</label>
-                <input id="tips" type="text" class="form-tips__input" name="tips" value="{{ old('tips') }}">
                 <div class="form__error">
-                    @error('tips')
+                    @error('steps.0')
                     {{ $message }}
                     @enderror
                 </div>
+            </div>
+            <div class="form__group">
+                <label for="tips" class="form__group-label"><span></span>ポイント・コツ</label>
+                <textarea id="tips" cols="30" rows="5" class="form-tips__input" name="tips">{{ old('tips') }}</textarea>
             </div>
         </div>
         <div class="form__btn">

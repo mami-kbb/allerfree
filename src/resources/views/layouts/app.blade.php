@@ -14,7 +14,7 @@
 <body>
     <header class="header">
         <div class="header-inner">
-            <h1 class="header__heading">allerfree</h1>
+            <a href="{{ route('recipes.list') }}" class="header__heading">allerfree</a>
             <div class="header__search">
                 @yield('search')
             </div>

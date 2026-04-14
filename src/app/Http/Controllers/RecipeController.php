@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
 use App\Models\Recipe;
 use App\Models\Allergy;
 use App\Models\Ingredient;
-use App\Models\AllergyRecipe;
-use App\Models\AllergyUser;
-use App\Models\IngredientRecipe;
-use App\Models\Step;
-use App\Models\Like;
-use App\Models\User;
+
 
 class RecipeController extends Controller
 {
@@ -58,6 +54,40 @@ class RecipeController extends Controller
         return view('index', compact('recipes', 'tab', 'keyword', 'message', 'selectedAllergies'));
     }
 
+    public function show($recipe_id)
+    {
+        $recipe = Recipe::with([
+            'user.profile',
+            'allergies',
+            'ingredients',
+            'steps',
+        ])->withCount('likes')->findOrFail($recipe_id);
+
+        $likesCount = $recipe->likes_count;
+
+        $isLiked = false;
+        if (auth()->check()) {
+            $isLiked = auth()->user()->likes()->where('recipe_id', $recipe_id)->exists();
+        }
+
+        return view('show', compact('recipe', 'likesCount', 'isLiked'));
+    }
+
+    public function toggle($id)
+    {
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+        $like = $user->likes()->where('recipe_id', $id)->first();
+
+        if ($like) {
+            $like->delete();
+        } else {
+            $user->likes()->create(['recipe_id' => $id]);
+        }
+
+        return back();
+    }
+
     public function postIndex()
     {
         if (! auth()->check()) {
@@ -69,7 +99,7 @@ class RecipeController extends Controller
         return view('post', compact('allergies'));
     }
 
-    public function postSore(Request $request)
+    public function postStore(PostRequest $request)
     {
         $path = $request->file('recipe_image') ? $request->file('recipe_image')->store('images', 'public') : null;
 
@@ -96,7 +126,7 @@ class RecipeController extends Controller
             }
         }
 
-        if ($request->has('step')) {
+        if ($request->has('steps')) {
             foreach ($request->steps as $index => $content) {
                 if (empty($content)) continue;
                 $recipe->steps()->create([

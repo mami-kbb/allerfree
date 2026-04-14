@@ -50,8 +50,11 @@
                 <div class="form__group-item">
                     <label for="allergy" class="form__group-label">アレルギー</label>
                     <div class="allergy-list">
+                        @php
+                        $selectedAllergies = old('allergy_recipe',$user->allergyIds());
+                        @endphp
                         @foreach($allergies as $allergy)
-                        <input type="checkbox" id="allergy_{{ $allergy->id }}" value="{{ $allergy->id }}" {{ in_array($allergy->id, old('allergy_recipe', [])) ? 'checked' : '' }} name="allergy_recipe[]"  class="allergy-checkbox">
+                        <input type="checkbox" id="allergy_{{ $allergy->id }}" value="{{ $allergy->id }}" name="allergy_recipe[]"  class="allergy-checkbox" {{ in_array($allergy->id, $selectedAllergies) ? 'checked' : '' }} >
                         <label for="allergy_{{ $allergy->id }}" class="allergy-btn">{{ $allergy->name }}</label>
                         @endforeach
                     </div>
@@ -60,7 +63,7 @@
             <div class="form__group">
                 <div class="form__group-item">
                     <label for="comment" class="form__group-label">自己PR</label>
-                    <input id="comment" type="text" class="form__group-comment" name="comment" value="{{ old('comment', $profile->comment ?? '') }}">
+                    <textarea id="comment" class="form__group-comment" name="comment">{{ old('comment', $profile->comment ?? '') }}</textarea>
                 </div>
             </div>
             <div class="form__btn">

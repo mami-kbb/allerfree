@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Recipe::class, 'likes')->withTimestamps();
     }
+
+    public function allergyIds()
+    {
+        return $this->allergies->pluck('id')->toArray();
+    }
 }

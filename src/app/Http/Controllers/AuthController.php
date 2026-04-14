@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Recipe;
@@ -41,7 +42,7 @@ class AuthController extends Controller
         return view('auth.profile_edit', compact('user', 'profile', 'allergies'));
     }
 
-    public function update(Request $request)
+    public function update(ProfileRequest $request)
     {
         $user = Auth::user();
 
@@ -60,6 +61,9 @@ class AuthController extends Controller
 
         $profile->comment = $request->comment;
         $profile->save();
+
+        $allergyIds = $request->input('allergy_recipe', []);
+        $user->allergies()->sync($allergyIds);
 
         if ($isFirstTime) {
             return redirect('/');

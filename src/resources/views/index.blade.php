@@ -27,7 +27,7 @@
 
     <div class="recipe-list">
         @forelse ($recipes as $recipe)
-        <a href="{{ route('recipe.detail', ['recipe_id' => $recipe->id]) }}" class="recipe-card">
+        <a href="{{ route('recipe.show', ['recipe_id' => $recipe->id]) }}" class="recipe-card">
             <div class="image-wrapper">
                 <img src="{{ asset('storage/' . $recipe->image) }}" alt="{{ $recipe->name }}" class="recipe-image">
             </div>

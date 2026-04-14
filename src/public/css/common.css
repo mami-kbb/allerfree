@@ -8,7 +8,6 @@ html, body {
     padding: 0;
     background-color: #f5f1ec;
     font-size: 24px;
-    font-weight: bold;
 }
 
 .header {
@@ -31,6 +30,8 @@ html, body {
     margin-right: 40px;
     color: #fff;
     font-family: "Mountains of Christmas", serif;
+    text-decoration: none;
+    font-size: 50px;
 
 }
 
@@ -72,24 +73,28 @@ html, body {
     width: 170px;
     height: 50px;
     font-size: 18px;
-    border-radius: 4px;
+    border-radius: 8px;
     text-decoration: none;
     cursor: pointer;
 
-    border: 2px solid;
+    border: none;
     transition: 0.2s;
 }
 
 .header-btn--light {
     background-color: #fff;
     color: #504635;
-    border-color: #504635;
+    box-shadow:
+    inset 0 0 0 4px #fff,
+    inset 0 0 0 6px #504635;
 }
 
 .header-btn--dark {
     background-color: #504635;
     color: #fff;
-    border-color: #fff;
+    box-shadow:
+    inset 0 0 0 5px #504635,
+    inset 0 0 0 6px #fff;
 }
 
 .content {
@@ -97,9 +102,8 @@ html, body {
 }
 
 input {
-    font-size: 22px;
-    font-weight: bold;
-    padding-left: 10px;
+    font-size: 20px;
+    padding: 5px 10px;
 }
 
 .form__error {
