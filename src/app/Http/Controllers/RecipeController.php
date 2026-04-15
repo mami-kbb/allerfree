@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Requests\PostRequest;
 use App\Models\Recipe;
 use App\Models\Allergy;
@@ -40,7 +41,7 @@ class RecipeController extends Controller
 
         } elseif ($tab === 'mylist') {
             if (! auth()->check()) {
-                $recipes = collect();
+                $recipes = new LengthAwarePaginator([], 0, 10);
             } else {
                 /** @var \App\Models\User $user */$user = auth()->user();
                 $recipes = $user->likedRecipes()

@@ -104,12 +104,20 @@ html, body {
 input {
     font-size: 20px;
     padding: 5px 10px;
+    border: 1px solid #5F5F5F;
+    border-radius: 4px;
 }
 
 .form__error {
     color: red;
     font-size: 20px;
     padding: 10px 0;
+}
+
+.error-input {
+    border: 2px solid #ff4d4f;
+    background-color: #fff5f5;
+    border-radius: 4px;
 }
 
 .allergy-button {

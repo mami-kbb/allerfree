@@ -38,7 +38,7 @@
             <div class="form__group">
                 <div class="form__group-item">
                     <label for="name" class="form__group-label">ユーザー名</label>
-                    <input id="name" type="text" class="form__group-input" name="name" value="{{ old('name', $user->name) }}">
+                    <input id="name" type="text" class="form__group-input @error ('name') error-input @enderror" name="name" value="{{ old('name', $user->name) }}">
                 </div>
                 <div class="form__error">
                     @error('name')

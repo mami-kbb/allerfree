@@ -31,7 +31,7 @@
             <h3>レシピ名と説明</h3>
             <div class="form__group">
                 <label for="name" class="form__group-label"><span></span>レシピ名</label>
-                <input id="name" type="text" class="form-name__input" name="name" value="{{ old('name') }}">
+                <input id="name" type="text" class="form-name__input @error('name') error-input @enderror" name="name" value="{{ old('name') }}">
                 <div class="form__error">
                     @error('name')
                     {{ $message }}
@@ -70,22 +70,29 @@
                 <div id="ingredient-list">
                     @for ($i = 0; $i < max(2, count(old('ingredients', []))); $i++)
                     <div class="ingredient-item" style="margin-bottom:10px;">
-                        <input type="text" class="form-ingredient__input" name="ingredients[]" placeholder="材料名" value="{{ old('ingredients.'.$i) }}">
-                        <input type="text" class="quantity" name="quantities[]" placeholder="分量" value="{{ old('quantities.'.$i) }}">
+                        <input type="text" class="form-ingredient__input @if($errors->has('ingredients') || $errors->has('ingredients.'.$i)) error-input @endif" name="ingredients[]" placeholder="材料名" value="{{ old('ingredients.'.$i) }}">
+                        <input type="text" class="quantity @if($errors->has('ingredients') || $errors->has('quantities.'.$i)) error-input @endif" name="quantities[]" placeholder="分量" value="{{ old('quantities.'.$i) }}">
                     </div>
                     @endfor
                 </div>
                 <button type="button" id="add-ingredient" class="ingredient-add">
                     <span class="ingredientAddIcon">+ 材料を追加</span>
                 </button>
-                <div class="form__error">
-                    @error('ingredients.0')
-                    {{ $message }}
-                    @enderror
-                    @error('quantities.0')
-                    {{ $message }}
-                    @enderror
-                </div>
+                @error('ingredients')
+                    <div class="form__error">{{ $message }}</div>
+                @enderror
+
+                @foreach ($errors->get('ingredients.*') as $messages)
+                    @foreach ($messages as $message)
+                        <div class="form__error">{{ $message }}</div>
+                    @endforeach
+                @endforeach
+
+                @foreach ($errors->get('quantities.*') as $messages)
+                    @foreach ($messages as $message)
+                        <div class="form__error">{{ $message }}</div>
+                    @endforeach
+                @endforeach
             </div>
 
             <hr>
@@ -96,7 +103,7 @@
                     @for ($i = 0; $i < max(2, count(old('steps', []))); $i++)
                     <div class="step-item" style="margin-bottom: 10px;">
                         <span class="step-number">{{ $i + 1 }}：</span>
-                        <input type="text" class="form-step__input" name="steps[]" placeholder="作り方" value="{{ old('steps.' .$i) }}">
+                        <input type="text" class="form-step__input @error('steps.'.$i) error-input @enderror" name="steps[]" placeholder="作り方" value="{{ old('steps.' .$i) }}">
                     </div>
                     @endfor
                 </div>

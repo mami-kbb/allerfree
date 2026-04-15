@@ -28,12 +28,10 @@ class PostRequest extends FormRequest
             'image' => ['required', 'image', 'mimes:jpeg,png'],
             'allergy_recipe' => ['required', 'array'],
             'allergy_recipe.*' => ['exists:allergies,id'],
-            'ingredients.0' => ['required','array', 'min:1'],
-            'ingredients.*' => ['required', 'string'],
-            'quantities.0' => ['required', 'array', 'min:1'],
-            'quantities.*' => ['required', 'string'],
-            'steps.0' => ['required', 'array', 'min:1'],
-            'steps.*'=> ['required', 'string'],
+            'ingredients.*' => ['nullable', 'string'],
+            'quantities.*' => ['nullable', 'string'],
+            'steps.0' => ['required', 'string'],
+            'steps.*'=> ['nullable', 'string'],
         ];
     }
 
@@ -44,8 +42,6 @@ class PostRequest extends FormRequest
             'image.required' => 'レシピ画像を選択してください',
             'image.mimes' => '「.png」または「.jpeg」形式でアップロードしてください',
             'allergy_recipe.required' => 'レシピのアレルギーを選択してください',
-            'ingredients.0.required' => '材料を１つ以上入力してください',
-            'quantities.0.required' => '分量を入力してください',
             'steps.0.required' => '手順を１つ以上入力してください',
         ];
     }
@@ -55,6 +51,13 @@ class PostRequest extends FormRequest
         $validator->after(function ($validator) {
             $ingredients = $this->ingredients ?? [];
             $quantities = $this->quantities ?? [];
+
+            $hasIngredient = collect($ingredients)->filter()->isNotEmpty();
+            $hasQuantity = collect($quantities)->filter()->isNotEmpty();
+
+            if (!$hasIngredient && !$hasQuantity) {
+                $validator->errors()->add('ingredients', '材料を１つ以上入力してください');
+            }
 
             foreach ($ingredients as $index => $ingredient) {
                 $quantity = $quantities[$index] ?? null;
