@@ -84,31 +84,7 @@
     text-align: left;
 }
 
-.allergy-list {
-    margin-top: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
 
-.allergy-checkbox {
-    display: none;
-}
-
-.allergy-btn {
-    padding: 6px 14px;
-    border: 1px solid #574228;
-    border-radius: 200px;
-    color: #574228;
-    cursor: pointer;
-    font-size: 15px;
-    transition: 0.2s;
-}
-
-.allergy-checkbox:checked + .allergy-btn {
-    background-color: #574228;
-    color: #fff;
-}
 
 .form__group-comment {
     width: 100%;

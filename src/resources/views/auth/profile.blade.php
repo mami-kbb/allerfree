@@ -4,8 +4,6 @@
 <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 @endsection
 
-
-
 @section('nav')
 @include('layouts.header_nav')
 @endsection
@@ -22,6 +20,8 @@
             <p class="user-name">{{ $user->name }}</p>
         </div>
         <a href="/mypage/profile" class="profile-edit">プロフィールを編集</a>
+
+    </div>
     </div>
     <div class="content-heading">
         <h2>投稿レシピ</h2>

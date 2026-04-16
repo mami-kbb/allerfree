@@ -7,7 +7,7 @@
         <div class="allergy-dropdown" id="allergyDropdown">
             <div class="allergy-area-content">
                 <span id="selectedAllergy">
-                    除外アレルギー：{{ $selectedAllergies->implode(', ') ?: '未選択'}}
+                    除外アレルギー：{{ $selectedAllergies->implode(', ') ?: '未選択' }}
                 </span>
                 <button type="button" class="allergy-button" id="openModal">詳細条件</button>
             </div>
@@ -28,12 +28,15 @@
                     }
                 @endphp
 
-                @foreach($allergies as $allergy)
-                <label>
-                    <input type="checkbox" name="allergy_recipe[]" class="allergy-checkbox" data-name="{{ $allergy->name }}" value="{{ $allergy->id }}" {{ in_array($allergy->id, $selectedIds) ? 'checked' : '' }}>
+                <input type="hidden" name="allergy_recipe[]" value="0">
+                <div class="allergy-list">
+                    @foreach($allergies as $allergy)
+                    <input type="checkbox" id="allergy_{{ $allergy->id }}" value="{{ $allergy->id }}" {{ in_array($allergy->id, $selectedIds) ? 'checked' : '' }} name="allergy_recipe[]" data-name="{{ $allergy->name }}" class="allergy-checkbox">
+                    <label for="allergy_{{ $allergy->id }}" class="allergy-btn">
                     {{ $allergy->name }}
-                </label>
-                @endforeach
+                    </label>
+                    @endforeach
+                </div>
 
                 <button class="modal-btn" type="button" id="applyAllergy">設定</button>
             </div>

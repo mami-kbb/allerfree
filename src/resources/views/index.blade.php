@@ -4,7 +4,9 @@
 <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 @endsection
 
-
+@section('search')
+@include('layouts.search_bar')
+@endsection
 
 @section('nav')
 @include('layouts.header_nav')
@@ -14,15 +16,15 @@
 <div class="index-content">
     <div class="index-content__header">
         <h2>{{ $message }}</h2>
-        @if (!empty($selectedAllergies))
+        @if ($selectedAllergies->count())
         <p class="allergy-text">
-            除外アレルギー：{{ implode('、', $selectedAllergies) }}
+            除外アレルギー：{{ $selectedAllergies->implode('、') }}
         </p>
         @endif
     </div>
     <div class="tabs">
-        <a href="/?tab=recommend&keyword={{ request('keyword') }}" class="{{ $tab === 'recommend' ? 'active' : '' }}">おすすめ</a>
-        <a href="/?tab=mylist&keyword={{ request('keyword') }}" class="{{ $tab === 'mylist' ? 'active' : '' }}">お気に入り</a>
+        <a href="{{ route('recipes.list', array_merge(request()->all(), ['tab' => 'recommend'])) }}" class="{{ $tab === 'recommend' ? 'active' : '' }}">おすすめ</a>
+        <a href="{{ route('recipes.list', array_merge(request()->all(), ['tab' => 'mylist'])) }}" class="{{ $tab === 'mylist' ? 'active' : '' }}">お気に入り</a>
     </div>
 
     <div class="recipe-list">

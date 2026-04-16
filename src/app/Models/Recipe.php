@@ -67,4 +67,11 @@ class Recipe extends Model
         }
         return $query;
     }
+
+    public function scopeSearch($query, $keyword, $excludeAllergies)
+    {
+        return $query
+        ->keywordSearch($keyword)
+        ->excludeAllergies($excludeAllergies);
+    }
 }

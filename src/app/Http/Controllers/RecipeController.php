@@ -14,10 +14,18 @@ class RecipeController extends Controller
 {
     public function index(Request $request)
     {
+
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
         $tab = $request->get('tab', 'recommend');
         $keyword = $request->get('keyword');
-        $excludeAllergies = $request->input('allergy_recipe', []);
-        $selectedAllergies = [];
+        $selectedAllergies = collect();
+
+        if ($request->has('allergy_recipe')) {
+            $excludeAllergies = array_filter((array)$request->input('allergy_recipe'));
+        } else {
+            $excludeAllergies = auth()->check() ? $user->allergyIds() : [];
+            }
 
         if($keyword) {
             $keywords = preg_split('/\s+/', $keyword);
@@ -28,26 +36,22 @@ class RecipeController extends Controller
 
         if (!empty($excludeAllergies)) {
             $selectedAllergies = Allergy::whereIn('id', $excludeAllergies)
-            ->pluck('name')
-            ->toArray();
+            ->pluck('name');
         }
 
         if ($tab === 'recommend') {
             $recipes = Recipe::query()
             ->orderBy('created_at', 'desc')
-            ->keywordSearch($keyword)
-            ->excludeAllergies($excludeAllergies)
+            ->search($keyword, $excludeAllergies)
             ->paginate(10);
 
         } elseif ($tab === 'mylist') {
             if (! auth()->check()) {
                 $recipes = new LengthAwarePaginator([], 0, 10);
             } else {
-                /** @var \App\Models\User $user */$user = auth()->user();
                 $recipes = $user->likedRecipes()
                 ->orderBy('likes.created_at', 'desc')
-                ->keywordSearch($keyword)
-                ->excludeAllergies($excludeAllergies)
+                ->search($keyword, $excludeAllergies)
                 ->paginate(10);
             }
         }
@@ -66,9 +70,12 @@ class RecipeController extends Controller
 
         $likesCount = $recipe->likes_count;
 
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+
         $isLiked = false;
         if (auth()->check()) {
-            $isLiked = auth()->user()->likes()->where('recipe_id', $recipe_id)->exists();
+            $isLiked = $user->likes()->where('recipe_id', $recipe_id)->exists();
         }
 
         return view('show', compact('recipe', 'likesCount', 'isLiked'));
