@@ -73,6 +73,9 @@ class IngredientsTableSeeder extends Seeder
                 'name' => '水'
             ],
             [
+                'name' => 'レモン汁'
+            ],
+            [
                 'name' => 'いちご'
             ],
             [
@@ -104,6 +107,12 @@ class IngredientsTableSeeder extends Seeder
             ],
             [
                 'name' => '長ネギ'
+            ],
+            [
+                'name' => '片栗粉'
+            ],
+            [
+                'name' => 'オイスターソース'
             ],
             [
                 'name' => '豚バラ'
