@@ -10,23 +10,12 @@ use App\Models\Allergy;
 
 class AuthController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        if (! auth()->check()) {
-            return redirect('/login
-            ');
-        }
-
         $user = Auth::user();
         $profile = $user->profile;
 
-        $query = Recipe::query()->orderBy('created_at', 'desc');
-
-        if (auth()->check()) {
-            $query->where('user_id', auth()->id());
-        }
-
-        $recipes = $query->get();
+        $recipes = Recipe::where('user_id', auth()->id())->orderBy('created_at', 'desc')->get();
 
         return view('auth.profile', compact('user', 'profile', 'recipes'));
     }
@@ -34,9 +23,7 @@ class AuthController extends Controller
     public function edit()
     {
         $user = Auth::user();
-
         $profile = $user->profile;
-
         $allergies = Allergy::selectable()->get();
 
         return view('auth.profile_edit', compact('user', 'profile', 'allergies'));
