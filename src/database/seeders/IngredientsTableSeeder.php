@@ -14,9 +14,14 @@ class IngredientsTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        
+        DB::table('ingredients')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         DB::table('ingredients')->insert([
             [
-                'name' => 'えび'
+                'name' => 'むきえび'
             ],
             [
                 'name' => 'ミニトマト'
@@ -161,6 +166,12 @@ class IngredientsTableSeeder extends Seeder
             ],
             [
                 'name' => 'かぼちゃ'
+            ],
+            [
+                'name' => '砂糖（生地用）'
+            ],
+            [
+                'name' => '砂糖（クリーム用）'
             ],
         ]);
     }

@@ -16,6 +16,12 @@ class RecipesTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('ingredient_recipe')->truncate();
+        DB::table('steps')->truncate();
+        DB::table('recipes')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         $disk = Storage::disk('public');
 
         $disk->makeDirectory('images');

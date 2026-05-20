@@ -14,6 +14,14 @@ class AllergiesTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        DB::table('allergy_recipe')->truncate();
+        DB::table('allergy_user')->truncate();
+        DB::table('allergies')->truncate();
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         DB::table('allergies')->insert ([
             [
                 'name' => '該当なし',

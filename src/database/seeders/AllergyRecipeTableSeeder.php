@@ -92,10 +92,6 @@ class AllergyRecipeTableSeeder extends Seeder
                 'allergy_id' => 4,
             ],
             [
-                'recipe_id' => 6,
-                'allergy_id' => 24,
-            ],
-            [
                 'recipe_id' => 7,
                 'allergy_id' => 2,
             ],

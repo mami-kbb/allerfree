@@ -14,6 +14,8 @@ class IngredientRecipeTableSeeder extends Seeder
      */
     public function run()
     {
+        
+
         DB::table('ingredient_recipe')->insert([
             [
                 'recipe_id' => 1,
@@ -92,7 +94,7 @@ class IngredientRecipeTableSeeder extends Seeder
             ],
             [
                 'recipe_id' => 3,
-                'ingredient_id' => 10,
+                'ingredient_id' => 50,
                 'quantity' => '110g',
             ],
             [
@@ -122,7 +124,7 @@ class IngredientRecipeTableSeeder extends Seeder
             ],
             [
                 'recipe_id' => 3,
-                'ingredient_id' => 10,
+                'ingredient_id' => 51,
                 'quantity' => '20g',
             ],
             [
@@ -242,15 +244,169 @@ class IngredientRecipeTableSeeder extends Seeder
             ],
             [
                 'recipe_id' => 7,
-                'ingredient_id' => 39,
+                'ingredient_id' => 40,
                 'quantity' => '3個',
             ],
             [
                 'recipe_id' => 7,
-                'ingredient_id' => 40,
+                'ingredient_id' => 41,
                 'quantity' => '150g',
             ],
-            
+            [
+                'recipe_id' => 7,
+                'ingredient_id' => 10,
+                'quantity' => '大さじ1.5',
+            ],
+            [
+                'recipe_id' => 7,
+                'ingredient_id' => 24,
+                'quantity' => '大さじ1',
+            ],
+            [
+                'recipe_id' => 7,
+                'ingredient_id' => 39,
+                'quantity' => '適量',
+            ],
+            [
+                'recipe_id' => 7,
+                'ingredient_id' => 42,
+                'quantity' => '適量',
+            ],
+            [
+                'recipe_id' => 8,
+                'ingredient_id' => 43,
+                'quantity' => '1/2本',
+            ],
+            [
+                'recipe_id' => 8,
+                'ingredient_id' => 44,
+                'quantity' => '1本',
+            ],
+            [
+                'recipe_id' => 8,
+                'ingredient_id' => 45,
+                'quantity' => '1枚',
+            ],
+            [
+                'recipe_id' => 8,
+                'ingredient_id' => 46,
+                'quantity' => '1袋',
+            ],
+            [
+                'recipe_id' => 8,
+                'ingredient_id' => 47,
+                'quantity' => '1パック',
+            ],
+            [
+                'recipe_id' => 8,
+                'ingredient_id' => 10,
+                'quantity' => '大さじ1',
+            ],
+            [
+                'recipe_id' => 8,
+                'ingredient_id' => 24,
+                'quantity' => '大さじ2～3',
+            ],
+            [
+                'recipe_id' => 8,
+                'ingredient_id' => 25,
+                'quantity' => '大さじ2',
+            ],
+            [
+                'recipe_id' => 8,
+                'ingredient_id' => 27,
+                'quantity' => '小さじ2',
+            ],
+            [
+                'recipe_id' => 8,
+                'ingredient_id' => 19,
+                'quantity' => '400ml',
+            ],
+            [
+                'recipe_id' => 9,
+                'ingredient_id' => 48,
+                'quantity' => '1枚',
+            ],
+            [
+                'recipe_id' => 9,
+                'ingredient_id' => 23,
+                'quantity' => '1/2個',
+            ],
+            [
+                'recipe_id' => 9,
+                'ingredient_id' => 44,
+                'quantity' => '1/3本',
+            ],
+            [
+                'recipe_id' => 9,
+                'ingredient_id' => 47,
+                'quantity' => '2個',
+            ],
+            [
+                'recipe_id' => 9,
+                'ingredient_id' => 9,
+                'quantity' => '3個',
+            ],
+            [
+                'recipe_id' => 9,
+                'ingredient_id' => 24,
+                'quantity' => '大さじ2',
+            ],
+            [
+                'recipe_id' => 9,
+                'ingredient_id' => 25,
+                'quantity' => '大さじ2',
+            ],
+            [
+                'recipe_id' => 9,
+                'ingredient_id' => 26,
+                'quantity' => '大さじ1',
+            ],
+            [
+                'recipe_id' => 9,
+                'ingredient_id' => 10,
+                'quantity' => '大さじ1',
+            ],
+            [
+                'recipe_id' => 9,
+                'ingredient_id' => 27,
+                'quantity' => '小さじ1',
+            ],
+            [
+                'recipe_id' => 9,
+                'ingredient_id' => 19,
+                'quantity' => '160ml',
+            ],
+            [
+                'recipe_id' => 10,
+                'ingredient_id' => 49,
+                'quantity' => '1/8個',
+            ],
+            [
+                'recipe_id' => 10,
+                'ingredient_id' => 19,
+                'quantity' => '100ml',
+            ],
+            [
+                'recipe_id' => 10,
+                'ingredient_id' => 24,
+                'quantity' => '大さじ1',
+            ],
+            [
+                'recipe_id' => 10,
+                'ingredient_id' => 25,
+                'quantity' => '大さじ1',
+            ],
+            [
+                'recipe_id' => 10,
+                'ingredient_id' => 26,
+                'quantity' => '大さじ1',
+            ],
+            [
+                'recipe_id' => 10,
+                'ingredient_id' => 10,
+                'quantity' => '小さじ1',
+            ],
         ]);
     }
 }
