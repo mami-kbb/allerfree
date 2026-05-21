@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Recipe;
 use App\Models\Allergy;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -57,5 +58,14 @@ class AuthController extends Controller
         }
 
         return redirect('/mypage');
+    }
+
+    public function show($user_id)
+    {
+        $user = User::findOrFail($user_id);
+        $profile = $user->profile;
+        $recipes = Recipe::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+
+        return view('auth.profile', compact('user', 'profile', 'recipes'));
     }
 }

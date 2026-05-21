@@ -27,11 +27,12 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 Route::get('/', [RecipeController::class, 'index'])->name('recipes.list');
 Route::get('/recipe/{recipe_id}', [RecipeController::class, 'show'])->name('recipe.show');
+Route::get('/user/{user_id}', [AuthController::class, 'show'])->name('user.profile');
 
 Route::middleware(['auth', 'verified'])->group (function () {
     Route::get('/mypage', [AuthController::class, 'index'])->name('mypage');
     Route::get('/mypage/profile', [AuthController::class, 'edit'])->name('profile');
-    Route::patch('/mypage/profile',[AuthController::class, 'update'])->name('profile_update');
+    Route::patch('/mypage/profile',[AuthController::class, 'update'])->name('profile.update');
     Route::get('/post', [RecipeController::class, 'postIndex'])->name('post.index');
     Route::post('/post', [RecipeController::class, 'postStore'])->name('post.store');
     Route::post('/recipe/{id}/like', [RecipeController::class, 'toggle'])->name('like');

@@ -19,8 +19,9 @@
             @endif
             <p class="user-name">{{ $user->name }}</p>
         </div>
-        <a href="/mypage/profile" class="profile-edit">プロフィールを編集</a>
-
+        @if (Auth::check() && Auth::id() === $user->id)
+        <a href="{{ route('profile') }}" class="profile-edit">プロフィールを編集</a>
+        @endif
     </div>
     </div>
     <div class="content-heading">

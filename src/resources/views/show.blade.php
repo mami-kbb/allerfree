@@ -21,14 +21,16 @@
             </div>
             <div class="user-info">
                 <span class="title">投稿者：</span>
-                <span class="user-icon">
-                    @if ($recipe->user && $recipe->user->profile && $recipe->user->profile->profile_image)
-                    <img src="{{ asset('storage/' . $recipe->user->profile->profile_image) }}" class="user-icon__img">
-                    @else
-                    <img class="user-icon__img" src="{{ asset('/images/icon.png') }}" alt="デフォルトアイコン">
-                    @endif
-                </span>
-                <span class="user-name">{{ $recipe->user->name ?? '退会済みユーザー' }}</span>
+                <a href="{{ route('user.profile', ['user_id' => $recipe->user->id]) }}" class="user-profile__link">
+                    <span class="user-icon">
+                        @if ($recipe->user && $recipe->user->profile && $recipe->user->profile->profile_image)
+                        <img src="{{ asset('storage/' . $recipe->user->profile->profile_image) }}" class="user-icon__img">
+                        @else
+                        <img class="user-icon__img" src="{{ asset('/images/icon.png') }}" alt="デフォルトアイコン">
+                        @endif
+                    </span>
+                    <span class="user-name">{{ $recipe->user->name ?? '退会済みユーザー' }}</span>
+                </a>
             </div>
             <div class="recipe-description">
                 <h4>レシピ説明</h4>
